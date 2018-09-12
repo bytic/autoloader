@@ -1,0 +1,32 @@
+{
+  "name": "bytic/autoloader",
+  "description": "Autoloader component for bytic",
+  "authors": [
+    {
+      "name": "Gabriel Solomon",
+      "email": "hello@gabrielsolomon.ro"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Nip\\Autoloader\\": "src/"
+    },
+    "classmap": [
+      "src"
+    ]
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Nip\\Autoloader\\Tests\\": "tests/src",
+      "Nip\\Autoloader\\Fixtures\\": "tests/fixtures"
+    }
+  },
+  "require": {
+    "php": "^7.0"
+  },
+  "require-dev": {
+    "squizlabs/php_codesniffer": "^3.0",
+    "phpunit/phpunit": "^7.2",
+    "mockery/mockery": "^1.1"
+  }
+}
