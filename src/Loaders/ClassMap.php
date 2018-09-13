@@ -27,7 +27,13 @@ class ClassMap extends AbstractLoader
     protected $retry = false;
 
     /**
+     * @var int
+     */
+    protected $retries = 0;
+
+    /**
      * @param $dir
+     *
      * @return $this
      */
     public function addDirectory($dir)
@@ -40,6 +46,7 @@ class ClassMap extends AbstractLoader
 
     /**
      * @param $class
+     *
      * @return null|string
      */
     public function getClassLocation($class)
@@ -50,6 +57,7 @@ class ClassMap extends AbstractLoader
     /**
      * @param $class
      * @param bool $retry
+     *
      * @return null|string
      */
     protected function getClassMapLocation($class, $retry = true)
@@ -64,8 +72,9 @@ class ClassMap extends AbstractLoader
             return false;
         }
 
-        if ($retry === true) {
+        if ($retry === true && !$this->isMaxRetries()) {
             $this->generateMap();
+            $this->increaseRetries();
 
             return $this->getClassMapLocation($class, false);
         }
@@ -95,7 +104,7 @@ class ClassMap extends AbstractLoader
     {
         $filepath = $this->getCachePath($dir);
 
-        if (!$this->readCacheFile($filepath)) {
+        if ( ! $this->readCacheFile($filepath)) {
             $this->generateMapDir($dir);
             $this->readCacheFile($filepath);
         }
@@ -103,16 +112,19 @@ class ClassMap extends AbstractLoader
 
     /**
      * @param $dir
+     *
      * @return string
      */
     protected function getCachePath($dir)
     {
         $filepath = $this->getCacheName($dir);
+
         return $this->getAutoLoader()->getCachePath() . $filepath;
     }
 
     /**
      * @param $dir
+     *
      * @return string
      */
     public function getCacheName($dir)
@@ -122,6 +134,7 @@ class ClassMap extends AbstractLoader
 
     /**
      * @param string $filePath
+     *
      * @return bool
      */
     protected function readCacheFile($filePath)
@@ -141,6 +154,7 @@ class ClassMap extends AbstractLoader
 
     /**
      * @param $dir
+     *
      * @throws Exception
      */
     public function generateMapDir($dir)
@@ -186,11 +200,29 @@ class ClassMap extends AbstractLoader
 
     /**
      * @param $dir
+     *
      * @return bool
      */
     protected function hasMapFile($dir)
     {
         $filepath = $this->getCachePath($dir);
+
         return file_exists($filepath);
+    }
+
+    /**
+     * @return int
+     */
+    public function isMaxRetries()
+    {
+        return $this->retries > 1;
+    }
+
+    /**
+     * @param int $retries
+     */
+    public function increaseRetries()
+    {
+        $this->retries++;
     }
 }
