@@ -2,6 +2,7 @@
 
 namespace Nip\AutoLoader\Loaders;
 
+use Exception;
 use Nip\AutoLoader\Generators\ClassMap as Generator;
 use Nip\Utility\Text;
 
@@ -23,6 +24,11 @@ class ClassMap extends AbstractLoader
      * @var bool
      */
     protected $retry = false;
+
+    /**
+     * @var int
+     */
+    protected $retries = 0;
 
     /**
      * @param $dir
@@ -64,8 +70,9 @@ class ClassMap extends AbstractLoader
             return false;
         }
 
-        if ($retry === true) {
+        if ($retry === true && !$this->isMaxRetries()) {
             $this->generateMap();
+            $this->increaseRetries();
 
             return $this->getClassMapLocation($class, false);
         }
@@ -143,6 +150,8 @@ class ClassMap extends AbstractLoader
 
     /**
      * @param $dir
+     *
+     * @throws Exception
      */
     public function generateMapDir($dir)
     {
@@ -193,5 +202,21 @@ class ClassMap extends AbstractLoader
         $filePath = $this->getCachePath($dir);
 
         return file_exists($filePath);
+    }
+
+    /**
+     * @return int
+     */
+    public function isMaxRetries()
+    {
+        return $this->retries > 1;
+    }
+
+    /**
+     * @param int $retries
+     */
+    public function increaseRetries()
+    {
+        $this->retries++;
     }
 }
