@@ -3,10 +3,12 @@
 namespace Nip\AutoLoader\Loaders;
 
 use Nip\AutoLoader\Generators\ClassMap as Generator;
+use Nip\Logger\Exception;
 use Nip\Utility\Text;
 
 /**
- * Class Psr4Class.
+ * Class Psr4Class
+ * @package Nip\AutoLoader\Loaders
  */
 class ClassMap extends AbstractLoader
 {
@@ -20,13 +22,12 @@ class ClassMap extends AbstractLoader
     protected $map = null;
 
     /**
-     * @var bool
+     * @var boolean
      */
     protected $retry = false;
 
     /**
      * @param $dir
-     *
      * @return $this
      */
     public function addDirectory($dir)
@@ -36,9 +37,9 @@ class ClassMap extends AbstractLoader
         return $this;
     }
 
+
     /**
      * @param $class
-     *
      * @return null|string
      */
     public function getClassLocation($class)
@@ -49,7 +50,6 @@ class ClassMap extends AbstractLoader
     /**
      * @param $class
      * @param bool $retry
-     *
      * @return null|string
      */
     protected function getClassMapLocation($class, $retry = true)
@@ -69,6 +69,8 @@ class ClassMap extends AbstractLoader
 
             return $this->getClassMapLocation($class, false);
         }
+
+        return null;
     }
 
     protected function checkMapInit()
@@ -91,39 +93,35 @@ class ClassMap extends AbstractLoader
      */
     protected function readMapDir($dir)
     {
-        $filePath = $this->getCachePath($dir);
+        $filepath = $this->getCachePath($dir);
 
-        if (!$this->readCacheFile($filePath)) {
+        if (!$this->readCacheFile($filepath)) {
             $this->generateMapDir($dir);
-            $this->readCacheFile($filePath);
+            $this->readCacheFile($filepath);
         }
     }
 
     /**
      * @param $dir
-     *
      * @return string
      */
     protected function getCachePath($dir)
     {
-        $fileName = $this->getCacheName($dir);
-
-        return $this->getAutoLoader()->getCachePath().$fileName;
+        $filepath = $this->getCacheName($dir);
+        return $this->getAutoLoader()->getCachePath() . $filepath;
     }
 
     /**
      * @param $dir
-     *
      * @return string
      */
     public function getCacheName($dir)
     {
-        return Text::toAscii($dir).'.php';
+        return Text::toAscii($dir) . '.php';
     }
 
     /**
-     * @param $filePath
-     *
+     * @param string $filePath
      * @return bool
      */
     protected function readCacheFile($filePath)
@@ -143,11 +141,14 @@ class ClassMap extends AbstractLoader
 
     /**
      * @param $dir
+     * @throws Exception
      */
     public function generateMapDir($dir)
     {
-        $filePath = $this->getCachePath($dir);
-        Generator::dump($dir, $filePath);
+        $filepath = $this->getCachePath($dir);
+        if (Generator::dump($dir, $filepath) == false) {
+            throw new Exception("Error writing cache to " . $filepath);
+        }
     }
 
     /**
@@ -161,7 +162,7 @@ class ClassMap extends AbstractLoader
     }
 
     /**
-     * @return bool
+     * @return boolean
      */
     public function isRetry()
     {
@@ -169,7 +170,7 @@ class ClassMap extends AbstractLoader
     }
 
     /**
-     * @param bool $retry
+     * @param boolean $retry
      */
     public function setRetry($retry)
     {
@@ -185,13 +186,11 @@ class ClassMap extends AbstractLoader
 
     /**
      * @param $dir
-     *
      * @return bool
      */
     protected function hasMapFile($dir)
     {
-        $filePath = $this->getCachePath($dir);
-
-        return file_exists($filePath);
+        $filepath = $this->getCachePath($dir);
+        return file_exists($filepath);
     }
 }

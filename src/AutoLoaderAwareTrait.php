@@ -3,7 +3,8 @@
 namespace Nip\AutoLoader;
 
 /**
- * Class AutoLoaderAwareTrait.
+ * Class AutoLoaderAwareTrait
+ * @package Nip\AutoLoader
  */
 trait AutoLoaderAwareTrait
 {
@@ -25,8 +26,7 @@ trait AutoLoaderAwareTrait
     }
 
     /**
-     * @param bool|AutoLoader $autoLoader
-     *
+     * @param AutoLoader $autoLoader
      * @return $this
      */
     public function setAutoLoader($autoLoader = false)

@@ -31,7 +31,6 @@ class AutoLoaderTest extends AbstractTest
         self::assertTrue($mock->autoload('FictiveClass'));
         self::assertFalse(class_exists('FictiveClass'));
 
-
         spl_autoload_unregister([$mock, 'autoload']);
     }
 
@@ -39,9 +38,5 @@ class AutoLoaderTest extends AbstractTest
     {
         parent::setUp();
         $this->object = new AutoLoader();
-    }
-
-    protected function tearDown()
-    {
     }
 }

@@ -3,15 +3,17 @@
 namespace Nip\AutoLoader\Generators;
 
 /**
- * Class ClassMap.
+ * Class ClassMap
+ * @package Nip\AutoLoader\Generators
  */
 class ClassMap
 {
+
     /**
      * Generate a class map file.
      *
      * @param array|string $dirs Directories or a single path to search in
-     * @param string       $file The name of the class map file
+     * @param string $file The name of the class map file
      */
     public static function dump($dirs, $file)
     {
@@ -26,9 +28,7 @@ class ClassMap
 
     /**
      * Iterate over all files in the given directory searching for classes.
-     *
      * @param \Iterator|string $dir The directory to search in or an iterator
-     *
      * @return array A class map array
      */
     public static function createMap($dir)
@@ -62,9 +62,7 @@ class ClassMap
 
     /**
      * Extract the classes in the given file.
-     *
      * @param string $path The file to check
-     *
      * @return array The found classes
      */
     private static function findClasses($path)
@@ -73,7 +71,7 @@ class ClassMap
         $tokens = token_get_all($contents);
         $classes = [];
         $namespace = '';
-        for ($i = 0; isset($tokens[$i]); $i++) {
+        for ($i = 0; isset($tokens[$i]); ++$i) {
             $token = $tokens[$i];
             if (!isset($token[1])) {
                 continue;
@@ -84,7 +82,7 @@ class ClassMap
                     $namespace = '';
                     // If there is a namespace, extract it
                     while (isset($tokens[++$i][1])) {
-                        if (in_array($tokens[$i][0], [T_STRING, T_NS_SEPARATOR])) {
+                        if (in_array($tokens[$i][0], array(T_STRING, T_NS_SEPARATOR))) {
                             $namespace .= $tokens[$i][1];
                         }
                     }
@@ -95,14 +93,14 @@ class ClassMap
                 case T_TRAIT:
                     // Skip usage of ::class constant
                     $isClassConstant = false;
-                    for ($j = $i - 1; $j > 0; $j--) {
+                    for ($j = $i - 1; $j > 0; --$j) {
                         if (!isset($tokens[$j][1])) {
                             break;
                         }
                         if (T_DOUBLE_COLON === $tokens[$j][0]) {
                             $isClassConstant = true;
                             break;
-                        } elseif (!in_array($tokens[$j][0], [T_WHITESPACE, T_DOC_COMMENT, T_COMMENT])) {
+                        } elseif (!in_array($tokens[$j][0], array(T_WHITESPACE, T_DOC_COMMENT, T_COMMENT))) {
                             break;
                         }
                     }
@@ -118,7 +116,7 @@ class ClassMap
                             break;
                         }
                     }
-                $classes[] = ltrim($namespace.$class, '\\');
+                $classes[] = ltrim($namespace . $class, '\\');
                     break;
                 default:
                     break;

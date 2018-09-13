@@ -6,7 +6,8 @@ use Nip\AutoLoader\AutoLoader;
 use Nip\AutoLoader\Exception as AutoloadException;
 
 /**
- * Class AbstractLoader.
+ * Class AbstractLoader
+ * @package Nip\AutoLoader\Loaders
  */
 abstract class AbstractLoader
 {
@@ -33,10 +34,8 @@ abstract class AbstractLoader
 
     /**
      * @param $name
-     *
-     * @throws AutoloadException
-     *
      * @return bool
+     * @throws AutoloadException
      */
     public function load($name)
     {
@@ -45,7 +44,7 @@ abstract class AbstractLoader
             if (!is_file($file)) {
                 throw new AutoloadException("Invalid filepath [$file] for name [$name");
             }
-            /* @noinspection PhpIncludeInspection */
+            /** @noinspection PhpIncludeInspection */
             if (!include($file)) {
                 throw new AutoloadException("Cannot include [$name] file [$file]");
             }
@@ -61,20 +60,17 @@ abstract class AbstractLoader
 
     /**
      * @param $class
-     *
-     * @return string|bool
+     * @return string|boolean
      */
 
     /**
      * @param $class
-     *
      * @return string|null
      */
     abstract public function getClassLocation($class);
 
     /**
      * @param $name
-     *
      * @return bool
      */
     public function isLoaded($name)
