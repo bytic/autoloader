@@ -12,6 +12,8 @@ use Nip\Utility\Text;
  */
 class ClassMap extends AbstractLoader
 {
+    const MAX_RETRIES = 1;
+
     protected $directories = [];
 
     protected $directoriesMap = [];
@@ -215,7 +217,7 @@ class ClassMap extends AbstractLoader
      */
     public function isMaxRetries()
     {
-        return $this->retries > 1;
+        return $this->retries >= self::MAX_RETRIES;
     }
 
     /**
