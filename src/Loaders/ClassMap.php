@@ -2,7 +2,6 @@
 
 namespace Nip\AutoLoader\Loaders;
 
-use Exception;
 use Nip\AutoLoader\Generators\ClassMap as Generator;
 use Nip\Logger\Exception;
 use Nip\Utility\Text;
@@ -219,22 +218,6 @@ class ClassMap extends AbstractLoader
     public function isMaxRetries()
     {
         return $this->retries >= self::MAX_RETRIES;
-    }
-
-    /**
-     * @param int $retries
-     */
-    public function increaseRetries()
-    {
-        $this->retries++;
-    }
-
-    /**
-     * @return int
-     */
-    public function isMaxRetries()
-    {
-        return $this->retries > 1;
     }
 
     /**

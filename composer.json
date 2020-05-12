@@ -9,7 +9,7 @@
   ],
   "autoload": {
     "psr-4": {
-      "Nip\\Autoloader\\": "src/"
+      "Nip\\AutoLoader\\": "src/"
     },
     "classmap": [
       "src"
@@ -17,8 +17,8 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "Nip\\Autoloader\\Tests\\": "tests/src",
-      "Nip\\Autoloader\\Fixtures\\": "tests/fixtures"
+      "Nip\\AutoLoader\\Tests\\": "tests/src",
+      "Nip\\AutoLoader\\Fixtures\\": "tests/fixtures"
     }
   },
   "require": {
