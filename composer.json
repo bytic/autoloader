@@ -9,16 +9,13 @@
   ],
   "autoload": {
     "psr-4": {
-      "Nip\\AutoLoader\\": "src/"
-    },
-    "classmap": [
-      "src"
-    ]
+      "ByTIC\\Autoloader\\": "src/"
+    }
   },
   "autoload-dev": {
     "psr-4": {
-      "Nip\\AutoLoader\\Tests\\": "tests/src",
-      "Nip\\AutoLoader\\Fixtures\\": "tests/fixtures"
+      "ByTIC\\Autoloader\\Tests\\": "tests/src",
+      "ByTIC\\Autoloader\\Fixtures\\": "tests/fixtures"
     }
   },
   "require": {
@@ -27,7 +24,7 @@
     "bytic/utility": "^1.0"
   },
   "require-dev": {
-    "phpunit/phpunit": "^7.2|^8.0",
+    "phpunit/phpunit": "^7.2|^8.0|^9.0",
     "mockery/mockery": "^1.1"
   }
 }

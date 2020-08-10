@@ -1,12 +1,12 @@
 <?php
 
-namespace Nip\Autoloader\Tests;
+namespace ByTIC\Autoloader\Tests;
 
 use PHPUnit\Framework\TestCase;
 
 /**
  * Class AbstractTest
- * @package Nip\Autoloader\Tests
+ * @package ByTIC\Autoloader\Tests
  */
 abstract class AbstractTest extends TestCase
 {

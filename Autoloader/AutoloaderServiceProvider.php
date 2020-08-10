@@ -1,14 +1,14 @@
 <?php
 
-namespace Nip\AutoLoader;
+namespace ByTIC\Autoloader;
 
 use Nip\Container\ServiceProviders\Providers\AbstractSignatureServiceProvider;
 
 /**
- * Class AutoLoaderServiceProvider
- * @package Nip\AutoLoader
+ * Class AutoloaderServiceProvider
+ * @package ByTIC\Autoloader
  */
-class AutoLoaderServiceProvider extends AbstractSignatureServiceProvider
+class AutoloaderServiceProvider extends AbstractSignatureServiceProvider
 {
 
     /**
@@ -21,16 +21,18 @@ class AutoLoaderServiceProvider extends AbstractSignatureServiceProvider
 
     protected function registerAutoLoader()
     {
-        $autoloader = self::newAutoLoader();
-        $this->getContainer()->share('autoloader', $autoloader);
+        $this->getContainer()->share('autoloader', function ()
+        {
+            return new Autoloader();
+        });
     }
 
     /**
-     * @return AutoLoader
+     * @return Autoloader
      */
     public static function newAutoLoader()
     {
-        return new AutoLoader();
+        return new Autoloader();
     }
 
     /**
